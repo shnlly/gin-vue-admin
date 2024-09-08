@@ -26,6 +26,7 @@ rm_file/
 /server/log/
 /server/gva
 /server/server
+/server/dev
 /server/latest_log
 /server/__debug_bin*
 server/uploads/
@@ -33,3 +34,4 @@ server/uploads/
 *.iml
 web/.pnpm-debug.log
 web/pnpm-lock.yaml
+.dev.code-workspace
