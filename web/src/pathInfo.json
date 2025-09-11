@@ -18,6 +18,7 @@
   "/src/view/example/index.vue": "Example",
   "/src/view/example/upload/scanUpload.vue": "scanUpload",
   "/src/view/example/upload/upload.vue": "Upload",
+  "/src/view/example/videoContentAnalysis/videoContentAnalysis.vue": "VideoContentAnalysis",
   "/src/view/init/index.vue": "Init",
   "/src/view/layout/aside/asideComponent/asyncSubmenu.vue": "AsyncSubmenu",
   "/src/view/layout/aside/asideComponent/index.vue": "AsideComponent",

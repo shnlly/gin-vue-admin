@@ -6,6 +6,7 @@ type ApiGroup struct {
 	CustomerApi
 	FileUploadAndDownloadApi
 	AttachmentCategoryApi
+	VideoContentAnalysisApi
 }
 
 var (

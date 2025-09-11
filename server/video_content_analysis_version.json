@@ -1,0 +1,115 @@
+{
+  "versionInfo": {
+    "name": "视频内容聚合分析系统",
+    "code": "v1.0.0",
+    "description": "完整的视频内容聚合分析系统，包括VideoContentAnalysis模型、API接口、菜单和权限配置",
+    "exportTime": "2024-09-11 23:40:00"
+  },
+  "exportMenu": [
+    {
+      "path": "videoContentAnalysis",
+      "name": "videoContentAnalysis",
+      "hidden": false,
+      "component": "view/example/videoContentAnalysis/videoContentAnalysis.vue",
+      "sort": 6,
+      "meta": {
+        "keepAlive": false,
+        "defaultMenu": false,
+        "title": "视频内容分析",
+        "icon": "video-play",
+        "closeTab": false
+      },
+      "parameters": [],
+      "menuBtn": [
+        {
+          "name": "add",
+          "desc": "新增"
+        },
+        {
+          "name": "edit",
+          "desc": "编辑"
+        },
+        {
+          "name": "delete",
+          "desc": "删除"
+        },
+        {
+          "name": "view",
+          "desc": "查看"
+        },
+        {
+          "name": "import",
+          "desc": "导入"
+        },
+        {
+          "name": "statistics",
+          "desc": "统计"
+        }
+      ],
+      "children": []
+    }
+  ],
+  "exportApi": [
+    {
+      "path": "/videoContent/createVideoContentAnalysis",
+      "description": "创建视频内容分析",
+      "apiGroup": "视频内容管理",
+      "method": "POST"
+    },
+    {
+      "path": "/videoContent/deleteVideoContentAnalysis",
+      "description": "删除视频内容分析",
+      "apiGroup": "视频内容管理", 
+      "method": "DELETE"
+    },
+    {
+      "path": "/videoContent/deleteVideoContentAnalysisByIds",
+      "description": "批量删除视频内容分析",
+      "apiGroup": "视频内容管理",
+      "method": "DELETE"
+    },
+    {
+      "path": "/videoContent/updateVideoContentAnalysis",
+      "description": "更新视频内容分析",
+      "apiGroup": "视频内容管理",
+      "method": "PUT"
+    },
+    {
+      "path": "/videoContent/findVideoContentAnalysis",
+      "description": "根据ID查询视频内容分析",
+      "apiGroup": "视频内容管理",
+      "method": "GET"
+    },
+    {
+      "path": "/videoContent/getVideoContentAnalysisList",
+      "description": "分页获取视频内容分析列表",
+      "apiGroup": "视频内容管理",
+      "method": "GET"
+    },
+    {
+      "path": "/videoContent/getVideoContentAnalysisStatistics",
+      "description": "获取视频内容分析统计信息",
+      "apiGroup": "视频内容管理",
+      "method": "GET"
+    },
+    {
+      "path": "/videoContent/importVideoContentAnalysisFromExcel",
+      "description": "从Excel导入视频内容分析数据",
+      "apiGroup": "视频内容管理",
+      "method": "POST"
+    },
+    {
+      "path": "/videoContent/batchUpdateProcessStatus",
+      "description": "批量更新处理状态",
+      "apiGroup": "视频内容管理",
+      "method": "PUT"
+    },
+    {
+      "path": "/videoContent/getVideoContentAnalysisPublic",
+      "description": "获取视频内容分析公开接口",
+      "apiGroup": "视频内容管理",
+      "method": "GET"
+    }
+  ],
+  "exportDictionary": []
+}
