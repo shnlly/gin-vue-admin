@@ -14,43 +14,8 @@ volumes:
   redis:
   
 services:
-  web:
-    build:
-      context: ../../web
-      dockerfile: ./Dockerfile
-    container_name: gva-web
-    restart: always
-    ports:
-      - '8080:8080'
-    depends_on:
-      - server
-    command: [ 'nginx-debug', '-g', 'daemon off;' ]
-    networks:
-      network:
-        ipv4_address: 177.7.0.11
-
-  server:
-    build:
-      context: ../../server
-      dockerfile: ./Dockerfile
-    container_name: gva-server
-    restart: always
-    ports:
-      - '8888:8888'
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    links:
-      - mysql
-      - redis
-    networks:
-      network:
-        ipv4_address: 177.7.0.12
-
   mysql:
-    image: mysql:8.0.21       # 如果您是 arm64 架构：如 MacOS 的 M1，请修改镜像为 image: mysql/mysql-server:8.0.21
+    image: mysql/mysql-server:8.0.21       # 如果您是 arm64 架构：如 MacOS 的 M1，请修改镜像为 image: mysql/mysql-server:8.0.21
     container_name: gva-mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
     restart: always
