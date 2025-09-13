@@ -9,6 +9,9 @@ type RouterGroup struct {
 	FileUploadAndDownloadRouter
 	AttachmentCategoryRouter
 	VideoContentAnalysisRouter
+	AiModelRouter
+	AiChatSessionRouter
+	AiChatMessageRouter
 }
 
 var (

@@ -5,4 +5,7 @@ type ServiceGroup struct {
 	FileUploadAndDownloadService
 	AttachmentCategoryService
 	VideoContentAnalysisService
+	AiModelService
+	AiChatSessionService
+	AiChatMessageService
 }

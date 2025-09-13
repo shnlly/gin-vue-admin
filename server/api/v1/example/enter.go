@@ -7,6 +7,9 @@ type ApiGroup struct {
 	FileUploadAndDownloadApi
 	AttachmentCategoryApi
 	VideoContentAnalysisApi
+	AiModelApi
+	AiChatSessionApi
+	AiChatMessageApi
 }
 
 var (
