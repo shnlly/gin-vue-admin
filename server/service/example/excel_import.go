@@ -3,8 +3,10 @@ package example
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/example"
@@ -191,30 +193,53 @@ func (e *ExcelImportService) parseRowToVideoContent(row []string, fieldMap map[s
 		return videoContent, errors.New("视频链接不能为空")
 	}
 
-	// 填充数据
-	videoContent.VideoDescription = getFieldValue("video_description")
-	videoContent.VideoLink = videoLink
-	videoContent.CreatorName = creatorName
-	videoContent.UniqueId = getFieldValue("unique_id")
-	videoContent.FansCount = getFieldValue("fans_count")
-	videoContent.PlayCount = getFieldValue("play_count")
-	videoContent.LikeCount = getFieldValue("like_count")
+	// 字符清理函数：移除无效UTF-8字符和控制字符
+	cleanString := func(value string) string {
+		if !utf8.ValidString(value) {
+			// 移除无效的UTF-8字节
+			value = strings.ToValidUTF8(value, "")
+		}
+
+		// 移除控制字符（除了换行和制表符）
+		reg := regexp.MustCompile(`[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]`)
+		value = reg.ReplaceAllString(value, "")
+
+		return strings.TrimSpace(value)
+	}
+
+	// 数据截断辅助函数
+	truncateString := func(value string, maxLength int) string {
+		value = cleanString(value)
+		if len(value) <= maxLength {
+			return value
+		}
+		return value[:maxLength]
+	}
+
+	// 填充数据（添加长度限制和字符清理）
+	videoContent.VideoDescription = cleanString(getFieldValue("video_description")) // TEXT类型，清理字符
+	videoContent.VideoLink = truncateString(videoLink, 500)
+	videoContent.CreatorName = truncateString(creatorName, 100)
+	videoContent.UniqueId = truncateString(getFieldValue("unique_id"), 100)
+	videoContent.FansCount = truncateString(getFieldValue("fans_count"), 20)
+	videoContent.PlayCount = truncateString(getFieldValue("play_count"), 20)
+	videoContent.LikeCount = truncateString(getFieldValue("like_count"), 20)
 	videoContent.CommentCount = parseInt(getFieldValue("comment_count"))
 	videoContent.ShareCount = parseInt(getFieldValue("share_count"))
 	videoContent.SalesVolume = parseInt(getFieldValue("sales_volume"))
-	videoContent.SalesAmount = getFieldValue("sales_amount")
-	videoContent.PublishTime = getFieldValue("publish_time")
-	videoContent.VideoDuration = getFieldValue("video_duration")
-	videoContent.VideoTitle = getFieldValue("video_title")
-	videoContent.VideoScript = getFieldValue("video_script")
-	videoContent.FixedScript = getFieldValue("fixed_script")
-	videoContent.VideoAnalysis = getFieldValue("video_analysis")
+	videoContent.SalesAmount = truncateString(getFieldValue("sales_amount"), 20)
+	videoContent.PublishTime = truncateString(getFieldValue("publish_time"), 50)
+	videoContent.VideoDuration = truncateString(getFieldValue("video_duration"), 20)
+	videoContent.VideoTitle = truncateString(getFieldValue("video_title"), 500)
+	videoContent.VideoScript = cleanString(getFieldValue("video_script"))     // TEXT类型，清理字符
+	videoContent.FixedScript = cleanString(getFieldValue("fixed_script"))     // TEXT类型，清理字符
+	videoContent.VideoAnalysis = cleanString(getFieldValue("video_analysis")) // TEXT类型，清理字符
 	videoContent.IsDownloaded = parseBool(getFieldValue("is_downloaded"))
 	videoContent.IsAudioExtracted = parseBool(getFieldValue("is_audio_extracted"))
 	videoContent.IsTextConverted = parseBool(getFieldValue("is_text_converted"))
 	videoContent.IsScriptFixed = parseBool(getFieldValue("is_script_fixed"))
 	videoContent.IsVideoAnalyzed = parseBool(getFieldValue("is_video_analyzed"))
-	videoContent.FixNote = getFieldValue("fix_note")
+	videoContent.FixNote = truncateString(getFieldValue("fix_note"), 500)
 
 	return videoContent, nil
 }
