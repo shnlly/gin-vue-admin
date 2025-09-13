@@ -175,9 +175,6 @@
               <template #header>
                 <div class="card-header">
                   <span class="card-title">📊 数据</span>
-                  <el-button type="primary" icon="TrendCharts" size="small" @click="analyzeVideoData">
-                    分析
-                  </el-button>
                 </div>
               </template>
               <div class="compact-stats">
@@ -272,23 +269,10 @@
                       <span class="analysis-title">🎬 视频画面分析</span>
                       <span class="analysis-subtitle" v-if="parsedAnalysisData">{{ parsedAnalysisData.Summary?.one_line || '智能分析结果' }}</span>
                     </div>
-                    <div class="header-actions">
-                      <el-button type="success" icon="MagicStick" size="small" @click="fixVideoScript">
-                        修复文案
-                      </el-button>
-                      <el-button type="warning" icon="VideoCamera" size="small" @click="analyzeVideoFrame">
-                        重新分析
-                      </el-button>
-                      <el-button type="primary" icon="Refresh" size="small" @click="refreshAnalysisData">
-                        刷新数据
-                      </el-button>
-                    </div>
                   </div>
                 </template>
                 <div v-if="!parsedAnalysisData" class="no-analysis">
-                  <el-empty description="暂无画面分析数据">
-                    <el-button type="primary" @click="analyzeVideoFrame">开始分析</el-button>
-                  </el-empty>
+                  <el-empty description="暂无画面分析数据" />
                 </div>
               </el-card>
 
@@ -1049,68 +1033,6 @@ export default {
       }
     },
 
-    // 新增的分析方法
-    async analyzeVideoData() {
-      ElMessage.info('AI数据分析功能正在开发中，敬请期待！')
-      // TODO: 实现AI数据分析逻辑
-    },
-
-    async fixVideoScript() {
-      if (!this.formData.videoScript) {
-        ElMessage.warning('暂无原始文案，无法进行修复')
-        return
-      }
-      
-      ElMessage.info('文案修复功能正在开发中，敬请期待！')
-      // TODO: 实现文案修复逻辑
-      // 示例逻辑：
-      // try {
-      //   const response = await fixScriptAPI({ 
-      //     id: this.formData.ID, 
-      //     script: this.formData.videoScript 
-      //   })
-      //   this.formData.fixedScript = response.data.fixedScript
-      //   this.formData.fixNote = response.data.fixNote
-      //   ElMessage.success('文案修复完成')
-      //   this.getTableData()
-      // } catch (error) {
-      //   ElMessage.error('文案修复失败')
-      // }
-    },
-
-    async analyzeVideoFrame() {
-      if (!this.formData.videoLink) {
-        ElMessage.warning('暂无视频链接，无法进行画面分析')
-        return
-      }
-      
-      ElMessage.info('视频画面分析功能正在开发中，敬请期待！')
-      // TODO: 实现视频画面分析逻辑
-      // 示例逻辑：
-      // try {
-      //   const response = await analyzeVideoAPI({ 
-      //     id: this.formData.ID, 
-      //     videoUrl: this.formData.videoLink 
-      //   })
-      //   this.formData.videoAnalysis = response.data.analysis
-      //   ElMessage.success('画面分析完成')
-      //   this.getTableData()
-      // } catch (error) {
-      //   ElMessage.error('画面分析失败')
-      // }
-    },
-
-    async batchUpdateStatus() {
-      if (!this.formData.ID) {
-        ElMessage.warning('无效的数据ID')
-        return
-      }
-      
-      ElMessage.info('批量状态更新功能正在开发中，敬请期待！')
-      // TODO: 实现批量状态更新逻辑
-      // 可以打开一个新的对话框让用户选择要更新的状态
-    },
-
     // 获取情感类型对应的标签颜色
     getEmotionType(emotion) {
       const emotionMap = {
@@ -1163,23 +1085,6 @@ export default {
       return driverMap[driver] || 'info';
     },
 
-    // 刷新分析数据
-    async refreshAnalysisData() {
-      try {
-        // 重新获取当前记录的最新数据
-        const res = await findVideoContentAnalysis(this.formData.ID);
-        if (res.code === 0) {
-          // 更新表单数据，特别是videoAnalysis字段
-          this.formData = { ...this.formData, ...res.data };
-          ElMessage.success('分析数据已刷新');
-        } else {
-          ElMessage.error('刷新失败：' + res.msg);
-        }
-      } catch (error) {
-        console.error('刷新分析数据失败:', error);
-        ElMessage.error('刷新失败，请检查网络连接');
-      }
-    }
   },
 
   computed: {
@@ -1286,7 +1191,7 @@ export default {
   color: #303133;
 }
 
-.header-tags, .header-actions {
+.header-tags {
   display: flex;
   gap: 8px;
 }
@@ -1655,7 +1560,6 @@ export default {
 
 .analysis-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -1675,11 +1579,6 @@ export default {
   font-size: 14px;
   color: #909399;
   font-weight: normal;
-}
-
-.header-actions {
-  display: flex;
-  gap: 8px;
 }
 
 .no-analysis {
@@ -2063,16 +1962,6 @@ export default {
   
   .analysis-bottom-row .el-col {
     margin-bottom: 16px;
-  }
-  
-  .header-actions {
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  
-  .header-actions .el-button {
-    font-size: 12px;
-    padding: 6px 10px;
   }
 }
 </style>
