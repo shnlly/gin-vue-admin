@@ -130,221 +130,433 @@
       :close-on-click-modal="false"
       :class="dialogType === 'view' ? 'video-detail-dialog enhanced-view' : 'video-detail-dialog'"
     >
-      <!-- 查看模式：美化的详情展示 -->
+      <!-- 查看模式：左右两列布局 -->
       <div v-if="dialogType === 'view'" class="video-detail-view">
-        <!-- 头部信息卡片 -->
-        <el-card class="detail-card header-card" shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span class="card-title">📹 视频基本信息</span>
-              <div class="header-tags">
-                <el-tag v-if="formData.isDownloaded" type="success" size="small">已下载</el-tag>
-                <el-tag v-else type="info" size="small">未下载</el-tag>
-              </div>
-            </div>
-          </template>
-          <el-row :gutter="24">
-            <el-col :span="24">
-              <div class="info-item title-item">
-                <div class="info-label">🎬 视频标题</div>
-                <div class="info-value title-value">{{ formData.videoTitle || '暂无标题' }}</div>
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="info-item">
-                <div class="info-label">👤 达人名称</div>
-                <div class="info-value creator-name">{{ formData.creatorName }}</div>
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="info-item">
-                <div class="info-label">🆔 唯一标识</div>
-                <div class="info-value">{{ formData.uniqueId || '暂无' }}</div>
-              </div>
-            </el-col>
-            <el-col :span="24">
-              <div class="info-item">
-                <div class="info-label">🔗 视频链接</div>
-                <div class="info-value link-value">
-                  <el-link :href="formData.videoLink" target="_blank" type="primary">
-                    {{ formData.videoLink }}
-                  </el-link>
+        <el-row :gutter="24" class="detail-layout">
+          <!-- 左侧：基础信息（约1/5宽度） -->
+          <el-col :span="5" class="left-panel">
+            <!-- 头部信息卡片 -->
+            <el-card class="detail-card header-card" shadow="hover">
+              <template #header>
+                <div class="card-header">
+                  <span class="card-title">📹 基本信息</span>
+                  <div class="header-tags">
+                    <el-tag v-if="formData.isDownloaded" type="success" size="small">已下载</el-tag>
+                    <el-tag v-else type="info" size="small">未下载</el-tag>
+                  </div>
+                </div>
+              </template>
+              <div class="basic-info">
+                <div class="info-item">
+                  <div class="info-label">🎬 标题</div>
+                  <div class="info-value title-value">{{ formData.videoTitle || '暂无标题' }}</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">👤 达人</div>
+                  <div class="info-value creator-name">{{ formData.creatorName }}</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">🆔 ID</div>
+                  <div class="info-value">{{ formData.uniqueId || '暂无' }}</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">🔗 链接</div>
+                  <div class="info-value link-value">
+                    <el-link :href="formData.videoLink" target="_blank" type="primary" :underline="false">
+                      查看视频
+                    </el-link>
+                  </div>
                 </div>
               </div>
-            </el-col>
-          </el-row>
-        </el-card>
+            </el-card>
 
-        <!-- 数据统计卡片 -->
-        <el-card class="detail-card stats-card" shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span class="card-title">📊 数据统计</span>
-              <el-button type="primary" icon="TrendCharts" size="small" @click="analyzeVideoData">
-                AI分析
-              </el-button>
-            </div>
-          </template>
-          <el-row :gutter="24" class="stats-row">
-            <el-col :span="6">
-              <div class="stat-item">
-                <div class="stat-icon">👥</div>
-                <div class="stat-content">
-                  <div class="stat-label">粉丝数</div>
-                  <div class="stat-value">{{ formData.fansCount || '0' }}</div>
+            <!-- 数据统计卡片 -->
+            <el-card class="detail-card stats-card" shadow="hover">
+              <template #header>
+                <div class="card-header">
+                  <span class="card-title">📊 数据</span>
+                  <el-button type="primary" icon="TrendCharts" size="small" @click="analyzeVideoData">
+                    分析
+                  </el-button>
+                </div>
+              </template>
+              <div class="compact-stats">
+                <div class="stat-row">
+                  <span class="stat-label">👥 粉丝</span>
+                  <span class="stat-value">{{ formData.fansCount || '0' }}</span>
+                </div>
+                <div class="stat-row highlight-row">
+                  <span class="stat-label">▶️ 播放</span>
+                  <span class="stat-value highlight">{{ formData.playCount || '0' }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">👍 点赞</span>
+                  <span class="stat-value">{{ formData.likeCount || '0' }}</span>
+                </div>
+                <div class="stat-row money-row">
+                  <span class="stat-label">💰 销售额</span>
+                  <span class="stat-value money-value">{{ formData.salesAmount || '0' }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">💬 评论</span>
+                  <span class="stat-value">{{ formData.commentCount || 0 }}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">📦 销量</span>
+                  <span class="stat-value">{{ formData.salesVolume || 0 }}件</span>
                 </div>
               </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item">
-                <div class="stat-icon">▶️</div>
-                <div class="stat-content">
-                  <div class="stat-label">播放量</div>
-                  <div class="stat-value highlight">{{ formData.playCount || '0' }}</div>
-                </div>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item">
-                <div class="stat-icon">👍</div>
-                <div class="stat-content">
-                  <div class="stat-label">点赞数</div>
-                  <div class="stat-value">{{ formData.likeCount || '0' }}</div>
-                </div>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item">
-                <div class="stat-icon">💰</div>
-                <div class="stat-content">
-                  <div class="stat-label">销售额</div>
-                  <div class="stat-value money-value">{{ formData.salesAmount || '0' }}</div>
-                </div>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row :gutter="24" class="stats-row">
-            <el-col :span="6">
-              <div class="stat-item secondary">
-                <div class="stat-label">评论数</div>
-                <div class="stat-value">{{ formData.commentCount || 0 }}</div>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item secondary">
-                <div class="stat-label">转发数</div>
-                <div class="stat-value">{{ formData.shareCount || 0 }}</div>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item secondary">
-                <div class="stat-label">销量</div>
-                <div class="stat-value">{{ formData.salesVolume || 0 }}件</div>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div class="stat-item secondary">
-                <div class="stat-label">视频时长</div>
-                <div class="stat-value">{{ formData.videoDuration || '未知' }}</div>
-              </div>
-            </el-col>
-          </el-row>
-        </el-card>
+            </el-card>
 
-        <!-- 内容分析卡片 -->
-        <el-card class="detail-card content-card" shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span class="card-title">📝 内容分析</span>
-              <div class="header-actions">
-                <el-button type="success" icon="MagicStick" size="small" @click="fixVideoScript">
-                  修复文案
-                </el-button>
-                <el-button type="warning" icon="VideoCamera" size="small" @click="analyzeVideoFrame">
-                  画面分析
-                </el-button>
+            <!-- 处理状态卡片 -->
+            <el-card class="detail-card status-card" shadow="hover">
+              <template #header>
+                <div class="card-header">
+                  <span class="card-title">⚙️ 状态</span>
+                </div>
+              </template>
+              <div class="compact-status">
+                <div class="status-row" :class="{ active: formData.isDownloaded }">
+                  <span class="status-icon">⬇️</span>
+                  <span class="status-text">下载</span>
+                  <el-tag :type="formData.isDownloaded ? 'success' : 'info'" size="small">
+                    {{ formData.isDownloaded ? '✓' : '○' }}
+                  </el-tag>
+                </div>
+                <div class="status-row" :class="{ active: formData.isAudioExtracted }">
+                  <span class="status-icon">🎵</span>
+                  <span class="status-text">音频</span>
+                  <el-tag :type="formData.isAudioExtracted ? 'success' : 'info'" size="small">
+                    {{ formData.isAudioExtracted ? '✓' : '○' }}
+                  </el-tag>
+                </div>
+                <div class="status-row" :class="{ active: formData.isTextConverted }">
+                  <span class="status-icon">📝</span>
+                  <span class="status-text">文本</span>
+                  <el-tag :type="formData.isTextConverted ? 'success' : 'info'" size="small">
+                    {{ formData.isTextConverted ? '✓' : '○' }}
+                  </el-tag>
+                </div>
+                <div class="status-row" :class="{ active: formData.isScriptFixed }">
+                  <span class="status-icon">✨</span>
+                  <span class="status-text">修复</span>
+                  <el-tag :type="formData.isScriptFixed ? 'success' : 'info'" size="small">
+                    {{ formData.isScriptFixed ? '✓' : '○' }}
+                  </el-tag>
+                </div>
+                <div class="status-row" :class="{ active: formData.isVideoAnalyzed }">
+                  <span class="status-icon">🔍</span>
+                  <span class="status-text">分析</span>
+                  <el-tag :type="formData.isVideoAnalyzed ? 'success' : 'info'" size="small">
+                    {{ formData.isVideoAnalyzed ? '✓' : '○' }}
+                  </el-tag>
+                </div>
+              </div>
+            </el-card>
+
+            <!-- 时间信息 -->
+            <div class="time-info compact">
+              <div class="time-item">📅 {{ formData.publishTime || '未知' }}</div>
+              <div class="time-item">🕒 {{ formatDate(formData.CreatedAt) }}</div>
+            </div>
+          </el-col>
+
+          <!-- 右侧：画面分析（约4/5宽度） -->
+          <el-col :span="19" class="right-panel">
+            <!-- 画面分析组件 -->
+            <div class="video-analysis-panel">
+              <el-card class="analysis-header-card" shadow="never">
+                <template #header>
+                  <div class="analysis-header">
+                    <div class="header-info">
+                      <span class="analysis-title">🎬 视频画面分析</span>
+                      <span class="analysis-subtitle" v-if="parsedAnalysisData">{{ parsedAnalysisData.Summary?.one_line || '智能分析结果' }}</span>
+                    </div>
+                    <div class="header-actions">
+                      <el-button type="success" icon="MagicStick" size="small" @click="fixVideoScript">
+                        修复文案
+                      </el-button>
+                      <el-button type="warning" icon="VideoCamera" size="small" @click="analyzeVideoFrame">
+                        重新分析
+                      </el-button>
+                      <el-button type="primary" icon="Refresh" size="small" @click="refreshAnalysisData">
+                        刷新数据
+                      </el-button>
+                    </div>
+                  </div>
+                </template>
+                <div v-if="!parsedAnalysisData" class="no-analysis">
+                  <el-empty description="暂无画面分析数据">
+                    <el-button type="primary" @click="analyzeVideoFrame">开始分析</el-button>
+                  </el-empty>
+                </div>
+              </el-card>
+
+              <!-- 分析内容 -->
+              <div v-if="parsedAnalysisData" class="analysis-content">
+                <!-- 分镜时间轴 -->
+                <el-card class="analysis-section timeline-section" shadow="hover">
+                  <template #header>
+                    <div class="section-header">
+                      <span class="section-title">🎞️ 分镜时间轴</span>
+                      <el-tag type="info" size="small">{{ parsedAnalysisData.Raw?.length || 0 }} 个镜头</el-tag>
+                    </div>
+                  </template>
+                  <div class="timeline-container">
+                    <div 
+                      v-for="(shot, index) in parsedAnalysisData.Raw" 
+                      :key="index" 
+                      class="timeline-item"
+                      @click="activeTimelineIndex = index"
+                      :class="{ active: activeTimelineIndex === index }"
+                    >
+                      <div class="timeline-time">{{ shot.time }}</div>
+                      <div class="timeline-content">
+                        <div class="scene-info">
+                          <div class="scene-title">{{ shot.scene || '场景描述' }}</div>
+                          <div class="scene-actions">{{ shot.actions || '动作描述' }}</div>
+                        </div>
+                        <div class="scene-details">
+                          <el-tag v-if="shot.products" type="warning" size="small">🛍️ {{ shot.products.slice(0, 30) }}...</el-tag>
+                          <el-tag v-if="shot.emotion" :type="getEmotionType(shot.emotion)" size="small">😊 {{ shot.emotion }}</el-tag>
+                        </div>
+                        <div v-if="shot.audio_text" class="audio-text">
+                          <span class="audio-icon">🎤</span>
+                          "{{ shot.audio_text }}"
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </el-card>
+
+                <!-- 重点时刻分析 -->
+                <el-card v-if="parsedAnalysisData.Highlights" class="analysis-section highlights-section" shadow="hover">
+                  <template #header>
+                    <div class="section-header">
+                      <span class="section-title">⭐ 重点时刻</span>
+                      <el-tag type="danger" size="small">{{ parsedAnalysisData.Highlights.length }} 个爆点</el-tag>
+                    </div>
+                  </template>
+                  <div class="highlights-grid">
+                    <div 
+                      v-for="(highlight, index) in parsedAnalysisData.Highlights" 
+                      :key="index" 
+                      class="highlight-item"
+                    >
+                      <div class="highlight-header">
+                        <el-tag :type="getCategoryType(highlight.category)" size="small">
+                          {{ highlight.category }}
+                        </el-tag>
+                        <span class="highlight-time">{{ highlight.time }}</span>
+                      </div>
+                      <div class="highlight-label">{{ highlight.label }}</div>
+                      <div class="highlight-description">{{ highlight.description }}</div>
+                      <div class="highlight-effect">
+                        <span class="effect-label">预期效果：</span>
+                        <span class="effect-text">{{ highlight.effect }}</span>
+                      </div>
+                      <div class="highlight-drivers">
+                        <el-tag 
+                          v-for="driver in highlight.driver" 
+                          :key="driver" 
+                          :type="getDriverType(driver)" 
+                          size="small"
+                          class="driver-tag"
+                        >
+                          {{ driver }}
+                        </el-tag>
+                      </div>
+                      <div class="highlight-metrics">
+                        <el-tag :type="highlight.replicability === '高' ? 'success' : highlight.replicability === '中' ? 'warning' : 'info'" size="small">
+                          可复制性: {{ highlight.replicability }}
+                        </el-tag>
+                        <el-tag :type="highlight.risk === '无' ? 'success' : 'danger'" size="small">
+                          风险: {{ highlight.risk }}
+                        </el-tag>
+                      </div>
+                    </div>
+                  </div>
+                </el-card>
+
+                <!-- 视频总结 -->
+                <el-row :gutter="16" class="summary-row">
+                  <el-col :span="12">
+                    <el-card class="analysis-section summary-section" shadow="hover">
+                      <template #header>
+                        <span class="section-title">📋 视频总结</span>
+                      </template>
+                      <div class="summary-content">
+                        <div class="summary-item">
+                          <div class="summary-label">🎯 核心观点</div>
+                          <div class="summary-value">{{ parsedAnalysisData.Summary?.one_line || '暂无' }}</div>
+                        </div>
+                        <div class="summary-item">
+                          <div class="summary-label">🔥 关键亮点</div>
+                          <div class="summary-value">{{ parsedAnalysisData.Summary?.highlight_overview || '暂无' }}</div>
+                        </div>
+                        <div class="summary-item">
+                          <div class="summary-label">🎣 引流钩子</div>
+                          <div class="summary-value">{{ parsedAnalysisData.Summary?.hook || '暂无' }}</div>
+                        </div>
+                        <div class="summary-item">
+                          <div class="summary-label">📞 行动召唤</div>
+                          <div class="summary-value">{{ parsedAnalysisData.Summary?.cta || '暂无' }}</div>
+                        </div>
+                        <div v-if="parsedAnalysisData.Summary?.key_visuals" class="summary-item">
+                          <div class="summary-label">👁️ 关键视觉</div>
+                          <div class="visual-tags">
+                            <el-tag 
+                              v-for="visual in parsedAnalysisData.Summary.key_visuals" 
+                              :key="visual" 
+                              type="primary" 
+                              size="small"
+                              class="visual-tag"
+                            >
+                              {{ visual }}
+                            </el-tag>
+                          </div>
+                        </div>
+                      </div>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-card class="analysis-section product-section" shadow="hover">
+                      <template #header>
+                        <span class="section-title">🛍️ 产品信息</span>
+                      </template>
+                      <div v-if="parsedAnalysisData.ProductInfo" class="product-content">
+                        <div class="product-item">
+                          <div class="product-label">📦 产品名称</div>
+                          <div class="product-value">{{ parsedAnalysisData.ProductInfo.name || '暂无' }}</div>
+                        </div>
+                        <div class="product-item">
+                          <div class="product-label">✨ 卖点</div>
+                          <div class="product-value">{{ parsedAnalysisData.ProductInfo.selling_points || '暂无' }}</div>
+                        </div>
+                        <div class="product-item">
+                          <div class="product-label">🎬 展示方式</div>
+                          <div class="product-value">{{ parsedAnalysisData.ProductInfo.presentation_methods || '暂无' }}</div>
+                        </div>
+                      </div>
+                      <div v-else class="no-product-info">
+                        <el-empty description="暂无产品信息" :image-size="60" />
+                      </div>
+                    </el-card>
+                  </el-col>
+                </el-row>
+
+                <!-- 结构分析和痛点分析 -->
+                <el-row :gutter="16" class="analysis-bottom-row">
+                  <el-col :span="8">
+                    <el-card class="analysis-section structure-section" shadow="hover">
+                      <template #header>
+                        <span class="section-title">🏗️ 结构分析</span>
+                      </template>
+                      <div v-if="parsedAnalysisData.Structure" class="structure-content">
+                        <div class="structure-item">
+                          <div class="structure-label">📝 类型</div>
+                          <div class="structure-value">{{ parsedAnalysisData.Structure.type || '暂无' }}</div>
+                        </div>
+                        <div class="structure-item">
+                          <div class="structure-label">⏱️ 最佳留存</div>
+                          <div class="structure-value">{{ parsedAnalysisData.Structure.best_for_retention || '暂无' }}</div>
+                        </div>
+                        <div class="structure-item">
+                          <div class="structure-label">💬 最佳互动</div>
+                          <div class="structure-value">{{ parsedAnalysisData.Structure.best_for_interaction || '暂无' }}</div>
+                        </div>
+                        <div class="structure-item">
+                          <div class="structure-label">💰 最佳转化</div>
+                          <div class="structure-value">{{ parsedAnalysisData.Structure.best_for_conversion || '暂无' }}</div>
+                        </div>
+                      </div>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-card class="analysis-section painpoints-section" shadow="hover">
+                      <template #header>
+                        <span class="section-title">🎯 痛点分析</span>
+                      </template>
+                      <div v-if="parsedAnalysisData.PainPoints" class="painpoints-content">
+                        <div class="painpoint-item">
+                          <div class="painpoint-label">👥 目标用户</div>
+                          <div class="painpoint-value">{{ parsedAnalysisData.PainPoints.target_audience || '暂无' }}</div>
+                        </div>
+                        <div class="painpoint-item">
+                          <div class="painpoint-label">💡 用户需求</div>
+                          <div class="painpoint-value">{{ parsedAnalysisData.PainPoints.user_needs || '暂无' }}</div>
+                        </div>
+                        <div class="painpoint-item">
+                          <div class="painpoint-label">🔔 共鸣触发</div>
+                          <div class="painpoint-value">{{ parsedAnalysisData.PainPoints.resonance_triggers || '暂无' }}</div>
+                        </div>
+                      </div>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-card class="analysis-section features-section" shadow="hover">
+                      <template #header>
+                        <span class="section-title">🎥 视频特征</span>
+                      </template>
+                      <div v-if="parsedAnalysisData.VideoFeatures" class="features-content">
+                        <div class="feature-tags">
+                          <el-tag v-if="parsedAnalysisData.VideoFeatures.is_real_person" type="success" size="small">
+                            👤 真人出镜
+                          </el-tag>
+                          <el-tag type="info" size="small">
+                            👥 {{ parsedAnalysisData.VideoFeatures.person_count || '0' }}人
+                          </el-tag>
+                          <el-tag type="primary" size="small">
+                            🗣️ {{ parsedAnalysisData.VideoFeatures.voiceover_type || '未知' }}
+                          </el-tag>
+                          <el-tag type="warning" size="small">
+                            🎬 {{ parsedAnalysisData.VideoFeatures.shot_type || '未知' }}
+                          </el-tag>
+                          <el-tag type="success" size="small">
+                            🌐 {{ parsedAnalysisData.VideoFeatures.language || '未知' }}
+                          </el-tag>
+                        </div>
+                        <div class="feature-item">
+                          <div class="feature-label">📍 拍摄场景</div>
+                          <div class="feature-value">{{ parsedAnalysisData.VideoFeatures.scene || '暂无' }}</div>
+                        </div>
+                      </div>
+                    </el-card>
+                  </el-col>
+                </el-row>
+
+                <!-- 评论洞察 -->
+                <el-card v-if="parsedAnalysisData.CommentInsights" class="analysis-section comments-section" shadow="hover">
+                  <template #header>
+                    <span class="section-title">💬 评论洞察</span>
+                  </template>
+                  <div class="comments-grid">
+                    <div class="comment-insight">
+                      <div class="insight-label">🛍️ 产品反馈</div>
+                      <div class="insight-content">{{ parsedAnalysisData.CommentInsights.product_feedback }}</div>
+                    </div>
+                    <div class="comment-insight">
+                      <div class="insight-label">🎥 视频反馈</div>
+                      <div class="insight-content">{{ parsedAnalysisData.CommentInsights.video_feedback }}</div>
+                    </div>
+                    <div class="comment-insight">
+                      <div class="insight-label">💬 社交互动</div>
+                      <div class="insight-content">{{ parsedAnalysisData.CommentInsights.social_interactions }}</div>
+                    </div>
+                    <div class="comment-insight">
+                      <div class="insight-label">💰 转化信号</div>
+                      <div class="insight-content">{{ parsedAnalysisData.CommentInsights.conversion_signals }}</div>
+                    </div>
+                    <div v-if="parsedAnalysisData.CommentInsights.risk_flags" class="comment-insight risk-insight">
+                      <div class="insight-label">⚠️ 风险标识</div>
+                      <div class="insight-content risk-content">{{ parsedAnalysisData.CommentInsights.risk_flags }}</div>
+                    </div>
+                  </div>
+                </el-card>
               </div>
             </div>
-          </template>
-          <div class="content-section">
-            <div class="content-item">
-              <div class="content-label">🎯 视频描述</div>
-              <div class="content-value">{{ formData.videoDescription || '暂无描述' }}</div>
-            </div>
-            <div class="content-item">
-              <div class="content-label">📜 原始文案</div>
-              <div class="content-value script-content">{{ formData.videoScript || '暂无文案' }}</div>
-            </div>
-            <div class="content-item" v-if="formData.fixedScript">
-              <div class="content-label">✨ 修复后文案</div>
-              <div class="content-value fixed-script">{{ formData.fixedScript }}</div>
-            </div>
-            <div class="content-item" v-if="formData.videoAnalysis">
-              <div class="content-label">🔍 画面分析</div>
-              <div class="content-value analysis-content">{{ formData.videoAnalysis }}</div>
-            </div>
-            <div class="content-item" v-if="formData.fixNote">
-              <div class="content-label">📋 修复说明</div>
-              <div class="content-value note-content">{{ formData.fixNote }}</div>
-            </div>
-          </div>
-        </el-card>
-
-        <!-- 处理状态卡片 -->
-        <el-card class="detail-card status-card" shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span class="card-title">⚙️ 处理状态</span>
-              <el-button type="primary" icon="Refresh" size="small" @click="batchUpdateStatus">
-                批量更新
-              </el-button>
-            </div>
-          </template>
-          <div class="status-grid">
-            <div class="status-item" :class="{ active: formData.isDownloaded }">
-              <div class="status-icon">⬇️</div>
-              <div class="status-text">视频下载</div>
-              <el-tag :type="formData.isDownloaded ? 'success' : 'info'" size="small">
-                {{ formData.isDownloaded ? '已完成' : '待处理' }}
-              </el-tag>
-            </div>
-            <div class="status-item" :class="{ active: formData.isAudioExtracted }">
-              <div class="status-icon">🎵</div>
-              <div class="status-text">音频提取</div>
-              <el-tag :type="formData.isAudioExtracted ? 'success' : 'info'" size="small">
-                {{ formData.isAudioExtracted ? '已完成' : '待处理' }}
-              </el-tag>
-            </div>
-            <div class="status-item" :class="{ active: formData.isTextConverted }">
-              <div class="status-icon">📝</div>
-              <div class="status-text">文本转换</div>
-              <el-tag :type="formData.isTextConverted ? 'success' : 'info'" size="small">
-                {{ formData.isTextConverted ? '已完成' : '待处理' }}
-              </el-tag>
-            </div>
-            <div class="status-item" :class="{ active: formData.isScriptFixed }">
-              <div class="status-icon">✨</div>
-              <div class="status-text">文案修复</div>
-              <el-tag :type="formData.isScriptFixed ? 'success' : 'info'" size="small">
-                {{ formData.isScriptFixed ? '已完成' : '待处理' }}
-              </el-tag>
-            </div>
-            <div class="status-item" :class="{ active: formData.isVideoAnalyzed }">
-              <div class="status-icon">🔍</div>
-              <div class="status-text">画面分析</div>
-              <el-tag :type="formData.isVideoAnalyzed ? 'success' : 'info'" size="small">
-                {{ formData.isVideoAnalyzed ? '已完成' : '待处理' }}
-              </el-tag>
-            </div>
-          </div>
-        </el-card>
-
-        <!-- 时间信息 -->
-        <div class="time-info">
-          <span class="time-item">📅 发布时间: {{ formData.publishTime || '未知' }}</span>
-          <span class="time-item">🕒 创建时间: {{ formatDate(formData.CreatedAt) }}</span>
-          <span class="time-item">🔄 更新时间: {{ formatDate(formData.UpdatedAt) }}</span>
-        </div>
+          </el-col>
+        </el-row>
       </div>
 
       <!-- 编辑模式：保持原有的表单结构 -->
@@ -569,6 +781,7 @@ export default {
       dialogVisible: false,
       dialogType: 'add',
       dialogTitle: '新增视频内容',
+      activeTimelineIndex: 0, // 当前激活的时间轴项
       formData: this.initFormData(),
       rules: {
         videoLink: [
@@ -896,6 +1109,99 @@ export default {
       ElMessage.info('批量状态更新功能正在开发中，敬请期待！')
       // TODO: 实现批量状态更新逻辑
       // 可以打开一个新的对话框让用户选择要更新的状态
+    },
+
+    // 获取情感类型对应的标签颜色
+    getEmotionType(emotion) {
+      const emotionMap = {
+        '开心': 'success',
+        '兴奋': 'success', 
+        '激动': 'success',
+        '愉快': 'success',
+        '惊讶': 'warning',
+        '好奇': 'warning',
+        '困惑': 'info',
+        '平静': 'info',
+        '中性': 'info',
+        '担心': 'danger',
+        '焦虑': 'danger',
+        '悲伤': 'danger'
+      };
+      return emotionMap[emotion] || 'info';
+    },
+
+    // 获取分类类型对应的标签颜色
+    getCategoryType(category) {
+      const categoryMap = {
+        '产品展示': 'primary',
+        '产品介绍': 'primary',
+        '使用演示': 'success',
+        '效果展示': 'success',
+        '情感共鸣': 'warning',
+        '引流钩子': 'danger',
+        '行动召唤': 'danger',
+        'CTA': 'danger',
+        '社交证明': 'info',
+        '权威背书': 'info'
+      };
+      return categoryMap[category] || 'primary';
+    },
+
+    // 获取驱动因素类型对应的标签颜色
+    getDriverType(driver) {
+      const driverMap = {
+        '好奇心': 'primary',
+        '恐惧感': 'danger',
+        'FOMO': 'danger',
+        '权威': 'success',
+        '社交证明': 'success',
+        '稀缺性': 'warning',
+        '紧迫性': 'warning',
+        '从众心理': 'info',
+        '情感共鸣': 'info'
+      };
+      return driverMap[driver] || 'info';
+    },
+
+    // 刷新分析数据
+    async refreshAnalysisData() {
+      try {
+        // 重新获取当前记录的最新数据
+        const res = await findVideoContentAnalysis(this.formData.ID);
+        if (res.code === 0) {
+          // 更新表单数据，特别是videoAnalysis字段
+          this.formData = { ...this.formData, ...res.data };
+          ElMessage.success('分析数据已刷新');
+        } else {
+          ElMessage.error('刷新失败：' + res.msg);
+        }
+      } catch (error) {
+        console.error('刷新分析数据失败:', error);
+        ElMessage.error('刷新失败，请检查网络连接');
+      }
+    }
+  },
+
+  computed: {
+    // 解析视频分析JSON数据
+    parsedAnalysisData() {
+      if (!this.formData.videoAnalysis) return null;
+      try {
+        // 清理JSON字符串（去除markdown代码块标记）
+        let cleanJson = this.formData.videoAnalysis.trim();
+        if (cleanJson.startsWith('```json')) {
+          cleanJson = cleanJson.replace(/```json\s*/, '').replace(/\s*```$/, '');
+        }
+        if (cleanJson.startsWith('```')) {
+          cleanJson = cleanJson.replace(/```\s*/, '').replace(/\s*```$/, '');
+        }
+        
+        const parsed = JSON.parse(cleanJson);
+        return parsed;
+      } catch (error) {
+        console.error('Failed to parse analysis data:', error);
+        return null;
+      }
     }
   },
 
@@ -1214,6 +1520,517 @@ export default {
   backdrop-filter: blur(5px);
 }
 
+/* 紧凑版统计样式 */
+.compact-stats {
+  padding: 8px 0;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-row.highlight-row {
+  background: linear-gradient(90deg, rgba(230, 162, 60, 0.1) 0%, transparent 100%);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(230, 162, 60, 0.2);
+}
+
+.stat-row.money-row {
+  background: linear-gradient(90deg, rgba(245, 108, 108, 0.1) 0%, transparent 100%);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(245, 108, 108, 0.2);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #909399;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.stat-value.highlight {
+  color: #E6A23C;
+  font-size: 16px;
+}
+
+.stat-value.money-value {
+  color: #F56C6C;
+}
+
+/* 紧凑版状态样式 */
+.compact-status {
+  padding: 8px 0;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-row.active {
+  background: linear-gradient(90deg, rgba(64, 158, 255, 0.1) 0%, transparent 100%);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(64, 158, 255, 0.2);
+}
+
+.status-icon {
+  font-size: 16px;
+  margin-right: 8px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.status-row.active .status-icon {
+  filter: none;
+}
+
+.status-text {
+  flex: 1;
+  font-size: 13px;
+  color: #606266;
+  margin-right: 8px;
+}
+
+.status-row.active .status-text {
+  color: #409EFF;
+  font-weight: 500;
+}
+
+/* 紧凑版时间信息 */
+.time-info.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 6px;
+  margin-top: 12px;
+}
+
+.time-item {
+  font-size: 12px;
+  color: #666;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
+}
+
+/* 视频分析面板样式 */
+.video-analysis-panel {
+  background: #fafbfc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.analysis-header-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.analysis-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #303133;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.analysis-subtitle {
+  font-size: 14px;
+  color: #909399;
+  font-weight: normal;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.no-analysis {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+/* 分析内容区域 */
+.analysis-content {
+  padding: 0 4px;
+}
+
+.analysis-section {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.analysis-section:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #303133;
+}
+
+/* 时间轴样式 */
+.timeline-section {
+  background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%);
+}
+
+.timeline-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  border-left: 4px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-left-color: #409EFF;
+  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.15);
+}
+
+.timeline-item.active {
+  background: rgba(64, 158, 255, 0.05);
+  border-left-color: #409EFF;
+  box-shadow: 0 4px 12px rgba(64, 158, 255, 0.2);
+}
+
+.timeline-time {
+  min-width: 80px;
+  font-weight: 600;
+  color: #409EFF;
+  font-size: 14px;
+  margin-right: 16px;
+  padding-top: 2px;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.scene-info {
+  margin-bottom: 12px;
+}
+
+.scene-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #303133;
+  margin-bottom: 6px;
+}
+
+.scene-actions {
+  font-size: 14px;
+  color: #606266;
+  line-height: 1.5;
+}
+
+.scene-details {
+  margin-bottom: 8px;
+}
+
+.scene-details .el-tag {
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+
+.audio-text {
+  background: #f0f9ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1890ff;
+  border-left: 3px solid #1890ff;
+  margin-top: 8px;
+}
+
+.audio-icon {
+  margin-right: 6px;
+}
+
+/* 重点时刻样式 */
+.highlights-section {
+  background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.highlight-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid #f56c6c;
+  box-shadow: 0 2px 8px rgba(245, 108, 108, 0.1);
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(245, 108, 108, 0.2);
+}
+
+.highlight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.highlight-time {
+  font-weight: 600;
+  color: #f56c6c;
+  font-size: 12px;
+}
+
+.highlight-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #303133;
+  margin-bottom: 8px;
+}
+
+.highlight-description {
+  font-size: 13px;
+  color: #606266;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.highlight-effect {
+  margin-bottom: 12px;
+}
+
+.effect-label {
+  font-size: 12px;
+  color: #909399;
+  margin-right: 6px;
+}
+
+.effect-text {
+  font-size: 13px;
+  color: #303133;
+}
+
+.highlight-drivers {
+  margin-bottom: 12px;
+}
+
+.driver-tag {
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+
+.highlight-metrics {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 总结和产品信息样式 */
+.summary-row {
+  margin-bottom: 20px;
+}
+
+.summary-section, .product-section {
+  height: 100%;
+}
+
+.summary-content, .product-content {
+  padding: 8px 0;
+}
+
+.summary-item, .product-item {
+  margin-bottom: 16px;
+}
+
+.summary-item:last-child, .product-item:last-child {
+  margin-bottom: 0;
+}
+
+.summary-label, .product-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #606266;
+  margin-bottom: 6px;
+}
+
+.summary-value, .product-value {
+  font-size: 14px;
+  color: #303133;
+  line-height: 1.5;
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #e0e0e0;
+}
+
+.visual-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.visual-tag {
+  margin: 0;
+}
+
+.no-product-info {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* 底部分析行样式 */
+.analysis-bottom-row {
+  margin-bottom: 20px;
+}
+
+.structure-section, .painpoints-section, .features-section {
+  height: 100%;
+}
+
+.structure-content, .painpoints-content, .features-content {
+  padding: 8px 0;
+}
+
+.structure-item, .painpoint-item {
+  margin-bottom: 12px;
+}
+
+.structure-item:last-child, .painpoint-item:last-child {
+  margin-bottom: 0;
+}
+
+.structure-label, .painpoint-label, .feature-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #606266;
+  margin-bottom: 4px;
+}
+
+.structure-value, .painpoint-value, .feature-value {
+  font-size: 13px;
+  color: #303133;
+  line-height: 1.4;
+}
+
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.feature-item {
+  margin-bottom: 8px;
+}
+
+/* 评论洞察样式 */
+.comments-section {
+  background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%);
+}
+
+.comments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.comment-insight {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+}
+
+.comment-insight.risk-insight {
+  border-left-color: #f5222d;
+  box-shadow: 0 2px 8px rgba(245, 34, 45, 0.1);
+}
+
+.insight-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 8px;
+}
+
+.risk-insight .insight-label {
+  color: #f5222d;
+}
+
+.insight-content {
+  font-size: 13px;
+  color: #303133;
+  line-height: 1.5;
+}
+
+.risk-content {
+  color: #f5222d;
+  font-weight: 500;
+}
+
 /* 响应式调整 */
 @media (max-width: 768px) {
   .stats-row .el-col {
@@ -1228,6 +2045,34 @@ export default {
   .time-info {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .highlights-grid, .comments-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-item {
+    flex-direction: column;
+  }
+  
+  .timeline-time {
+    min-width: auto;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  
+  .analysis-bottom-row .el-col {
+    margin-bottom: 16px;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .header-actions .el-button {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 }
 </style>
