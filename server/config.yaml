@@ -84,7 +84,7 @@ hua-wei-obs:
     access-key: you-access-key
     secret-key: you-secret-key
 jwt:
-    signing-key: b9602b41-32e2-4e36-90b9-eb2ec48cb547
+    signing-key: 38d69d88-600d-4b28-a237-7f6ca47ed6c2
     expires-time: 7d
     buffer-time: 1d
     issuer: qmPlus
@@ -138,8 +138,8 @@ mysql:
     prefix: ""
     port: "13306"
     config: charset=utf8mb4&parseTime=True&loc=Local
-    db-name: qmPlus
-    username: gva
+    db-name: plugin_init
+    username: root
     password: Aa@6447985
     path: 127.0.0.1
     engine: ""

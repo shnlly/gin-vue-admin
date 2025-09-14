@@ -8,13 +8,27 @@ import (
 
 func Menu(ctx context.Context) {
 	entities := []model.SysBaseMenu{
+		// 主菜单：TK助手
 		{
-			ParentId:  9, // 插件系统父菜单ID
+			ParentId:  0, // 根级菜单
+			Path:      "tkhelper",
+			Name:      "tkhelper",
+			Hidden:    false,
+			Component: "view/routerHolder.vue",
+			Sort:      10,
+			Meta: model.Meta{
+				Title: "TK助手",
+				Icon:  "tools",
+			},
+		},
+		// 子菜单1：视频内容分析
+		{
+			ParentId:  0, // 这里会在插件注册时自动设置为上面主菜单的ID
 			Path:      "videoContentAnalysis",
 			Name:      "videoContentAnalysis",
 			Hidden:    false,
 			Component: "plugin/tkhelper/view/videoContentAnalysis.vue",
-			Sort:      101,
+			Sort:      1,
 			Meta: model.Meta{
 				Title:     "视频内容分析",
 				Icon:      "video-camera",
@@ -29,13 +43,14 @@ func Menu(ctx context.Context) {
 				{Name: "statistics", Desc: "统计"},
 			},
 		},
+		// 子菜单2：AI模型管理
 		{
-			ParentId:  9, // 插件系统父菜单ID
+			ParentId:  0, // 这里会在插件注册时自动设置为主菜单的ID
 			Path:      "aiModel",
 			Name:      "aiModel",
 			Hidden:    false,
 			Component: "plugin/tkhelper/view/aiModel.vue",
-			Sort:      102,
+			Sort:      2,
 			Meta: model.Meta{
 				Title:     "AI模型管理",
 				Icon:      "cpu",
@@ -49,13 +64,14 @@ func Menu(ctx context.Context) {
 				{Name: "setDefault", Desc: "设为默认"},
 			},
 		},
+		// 子菜单3：AI对话
 		{
-			ParentId:  9, // 插件系统父菜单ID
+			ParentId:  0, // 这里会在插件注册时自动设置为主菜单的ID
 			Path:      "aiChat",
 			Name:      "aiChat",
 			Hidden:    false,
 			Component: "plugin/tkhelper/view/aiChat.vue",
-			Sort:      103,
+			Sort:      3,
 			Meta: model.Meta{
 				Title:     "AI对话",
 				Icon:      "chat-dot-round",
@@ -68,5 +84,9 @@ func Menu(ctx context.Context) {
 			},
 		},
 	}
+
+	// utils.RegisterMenus 会自动处理父子关系：
+	// - 第一个菜单作为父菜单
+	// - 后续菜单自动设置为第一个菜单的子菜单
 	utils.RegisterMenus(entities...)
 }

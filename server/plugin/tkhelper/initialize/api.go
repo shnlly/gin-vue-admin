@@ -40,7 +40,7 @@ func Api(ctx context.Context) {
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-model/list",
+			Path:        "/tkhelper/ai-model/getAiModelList",
 			Description: "获取AI模型列表",
 			ApiGroup:    "AI模型管理",
 			Method:      "GET",
@@ -50,6 +50,18 @@ func Api(ctx context.Context) {
 			Description: "设置默认AI模型",
 			ApiGroup:    "AI模型管理",
 			Method:      "PUT",
+		},
+		{
+			Path:        "/tkhelper/ai-model/getDefault",
+			Description: "获取默认AI模型",
+			ApiGroup:    "AI模型管理",
+			Method:      "GET",
+		},
+		{
+			Path:        "/tkhelper/ai-model/getEnabled",
+			Description: "获取启用的AI模型列表",
+			ApiGroup:    "AI模型管理",
+			Method:      "GET",
 		},
 
 		// AI对话会话管理 API
@@ -84,8 +96,14 @@ func Api(ctx context.Context) {
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/list",
+			Path:        "/tkhelper/ai-chat-session/getAiChatSessionList",
 			Description: "获取AI对话会话列表",
+			ApiGroup:    "AI对话管理",
+			Method:      "GET",
+		},
+		{
+			Path:        "/tkhelper/ai-chat-session/getUserSessions",
+			Description: "获取用户会话列表",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
@@ -122,10 +140,22 @@ func Api(ctx context.Context) {
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/list",
+			Path:        "/tkhelper/ai-chat-message/getAiChatMessageList",
 			Description: "获取AI对话消息列表",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
+		},
+		{
+			Path:        "/tkhelper/ai-chat-message/getSessionMessages",
+			Description: "获取会话消息",
+			ApiGroup:    "AI对话管理",
+			Method:      "GET",
+		},
+		{
+			Path:        "/tkhelper/ai-chat-message/sendMessage",
+			Description: "发送聊天消息",
+			ApiGroup:    "AI对话管理",
+			Method:      "POST",
 		},
 
 		// 视频内容分析 API
@@ -160,8 +190,14 @@ func Api(ctx context.Context) {
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/list",
+			Path:        "/tkhelper/video-content-analysis/getVideoContentAnalysisList",
 			Description: "获取视频内容分析列表",
+			ApiGroup:    "视频内容分析",
+			Method:      "GET",
+		},
+		{
+			Path:        "/tkhelper/video-analysis/getVideoContentAnalysisStatistics",
+			Description: "获取视频内容分析统计信息",
 			ApiGroup:    "视频内容分析",
 			Method:      "GET",
 		},
@@ -172,8 +208,14 @@ func Api(ctx context.Context) {
 			Method:      "POST",
 		},
 		{
-			Path:        "/tkhelper/video-analysis/statisticsVideoContentAnalysis",
-			Description: "视频内容分析统计",
+			Path:        "/tkhelper/video-analysis/batchUpdateProcessStatus",
+			Description: "批量更新处理状态",
+			ApiGroup:    "视频内容分析",
+			Method:      "PUT",
+		},
+		{
+			Path:        "/tkhelper/video-analysis/getVideoContentAnalysisPublic",
+			Description: "获取视频内容分析公开接口",
 			ApiGroup:    "视频内容分析",
 			Method:      "GET",
 		},
