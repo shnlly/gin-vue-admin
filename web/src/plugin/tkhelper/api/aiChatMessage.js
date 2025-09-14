@@ -7,7 +7,7 @@ import service from '@/utils/request'
 // @Produce application/json
 // @Param data body model.AiChatMessage true "创建AI对话消息"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
-// @Router /aiChatMessage/createAiChatMessage [post]
+// @Router /tkhelper/chat-message/create [post]
 export const createAiChatMessage = (data) => {
   return service({
     url: '/tkhelper/chat-message/create',
@@ -23,7 +23,7 @@ export const createAiChatMessage = (data) => {
 // @Produce application/json
 // @Param data body model.AiChatMessage true "删除AI对话消息"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /aiChatMessage/deleteAiChatMessage [delete]
+// @Router /tkhelper/chat-message/delete [delete]
 export const deleteAiChatMessage = (params) => {
   return service({
     url: '/tkhelper/chat-message/delete',
@@ -38,7 +38,7 @@ export const deleteAiChatMessage = (params) => {
 // @accept application/json
 // @Produce application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"批量删除成功"}"
-// @Router /aiChatMessage/deleteAiChatMessageByIds [delete]
+// @Router /tkhelper/chat-message/deleteByIds [delete]
 export const deleteAiChatMessageByIds = (params) => {
   return service({
     url: '/tkhelper/chat-message/deleteByIds',
@@ -54,7 +54,7 @@ export const deleteAiChatMessageByIds = (params) => {
 // @Produce application/json
 // @Param data body model.AiChatMessage true "更新AI对话消息"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /aiChatMessage/updateAiChatMessage [put]
+// @Router /tkhelper/chat-message/update [put]
 export const updateAiChatMessage = (data) => {
   return service({
     url: '/tkhelper/chat-message/update',
@@ -70,7 +70,7 @@ export const updateAiChatMessage = (data) => {
 // @Produce application/json
 // @Param data query model.AiChatMessage true "用id查询AI对话消息"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /aiChatMessage/findAiChatMessage [get]
+// @Router /tkhelper/chat-message/find [get]
 export const findAiChatMessage = (params) => {
   return service({
     url: '/tkhelper/chat-message/find',
@@ -86,7 +86,7 @@ export const findAiChatMessage = (params) => {
 // @Produce application/json
 // @Param data query request.PageInfo true "分页获取AI对话消息列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /aiChatMessage/getAiChatMessageList [get]
+// @Router /tkhelper/chat-message/getAiChatMessageList [get]
 export const getAiChatMessageList = (params) => {
   return service({
     url: '/tkhelper/chat-message/getAiChatMessageList',
@@ -102,7 +102,7 @@ export const getAiChatMessageList = (params) => {
 // @Produce application/json
 // @Param sessionId query uint true "会话ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /aiChatMessage/getSessionMessages [get]
+// @Router /tkhelper/chat-message/getSessionMessages [get]
 export const getSessionMessages = (params) => {
   return service({
     url: '/tkhelper/chat-message/getSessionMessages',
@@ -118,7 +118,7 @@ export const getSessionMessages = (params) => {
 // @Produce application/json
 // @Param data body request.ChatRequest true "发送消息请求"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"发送成功"}"
-// @Router /aiChatMessage/sendMessage [post]
+// @Router /tkhelper/chat-message/sendMessage [post]
 export const sendMessage = (data) => {
   return service({
     url: '/tkhelper/chat-message/sendMessage',
@@ -129,9 +129,9 @@ export const sendMessage = (data) => {
 
 // 发送流式消息
 export const sendStreamMessage = (data, onMessage, onError, onEnd) => {
-  const baseURL = service.defaults.baseURL || '/api/v1'
+  const baseURL = service.defaults.baseURL || '/api'
   const token = localStorage.getItem('token')
-  
+
   // 使用fetch来发送POST请求并处理流式响应
   fetch(`${baseURL}/tkhelper/chat-message/sendMessage`, {
     method: 'POST',
@@ -145,20 +145,20 @@ export const sendStreamMessage = (data, onMessage, onError, onEnd) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    
+
     const reader = response.body.getReader()
     const decoder = new TextDecoder()
-    
+
     function readStream() {
       return reader.read().then(({ done, value }) => {
         if (done) {
           onEnd && onEnd()
           return
         }
-        
+
         const chunk = decoder.decode(value, { stream: true })
         const lines = chunk.split('\n')
-        
+
         for (const line of lines) {
           if (line.trim() && line.startsWith('data: ')) {
             try {
@@ -174,18 +174,18 @@ export const sendStreamMessage = (data, onMessage, onError, onEnd) => {
             }
           }
         }
-        
+
         return readStream()
       })
     }
-    
+
     return readStream()
   })
   .catch(error => {
     console.error('流式请求失败:', error)
     onError && onError(error)
   })
-  
+
   // 返回一个包含close方法的对象以保持接口兼容
   return {
     close: () => {

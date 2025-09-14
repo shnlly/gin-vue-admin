@@ -107,10 +107,6 @@ func Routers() *gin.Engine {
 		exampleRouter.InitCustomerRouter(PrivateGroup)                      // 客户路由
 		exampleRouter.InitFileUploadAndDownloadRouter(PrivateGroup)         // 文件上传下载功能路由
 		exampleRouter.InitAttachmentCategoryRouterRouter(PrivateGroup)      // 文件上传下载分类
-		exampleRouter.InitVideoContentAnalysisRouter(PrivateGroup)          // 视频内容分析路由
-		exampleRouter.InitAiModelRouter(PrivateGroup, PublicGroup)          // AI模型管理路由
-		exampleRouter.InitAiChatSessionRouter(PrivateGroup, PublicGroup)    // AI对话会话路由
-		exampleRouter.InitAiChatMessageRouter(PrivateGroup, PublicGroup)    // AI对话消息路由
 
 	}
 

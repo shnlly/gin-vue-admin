@@ -63,10 +63,6 @@ func RegisterTables() {
 		example.ExaFileChunk{},
 		example.ExaFileUploadAndDownload{},
 		example.ExaAttachmentCategory{},
-		example.VideoContentAnalysis{},
-		example.AiModel{},
-		example.AiChatSession{},
-		example.AiChatMessage{},
 	)
 	if err != nil {
 		global.GVA_LOG.Error("register table failed", zap.Error(err))

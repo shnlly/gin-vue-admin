@@ -3,7 +3,7 @@ import service from '@/utils/request'
 // 创建视频内容分析
 export const createVideoContentAnalysis = (data) => {
   return service({
-    url: '/videoContent/createVideoContentAnalysis',
+    url: '/tkhelper/video-analysis/create',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export const createVideoContentAnalysis = (data) => {
 // 删除视频内容分析
 export const deleteVideoContentAnalysis = (ID) => {
   return service({
-    url: '/videoContent/deleteVideoContentAnalysis',
+    url: '/tkhelper/video-analysis/delete',
     method: 'delete',
     params: { ID }
   })
@@ -21,7 +21,7 @@ export const deleteVideoContentAnalysis = (ID) => {
 // 批量删除视频内容分析
 export const deleteVideoContentAnalysisByIds = (IDs) => {
   return service({
-    url: '/videoContent/deleteVideoContentAnalysisByIds',
+    url: '/tkhelper/video-analysis/deleteByIds',
     method: 'delete',
     params: { 'IDs[]': IDs }
   })
@@ -30,7 +30,7 @@ export const deleteVideoContentAnalysisByIds = (IDs) => {
 // 更新视频内容分析
 export const updateVideoContentAnalysis = (data) => {
   return service({
-    url: '/videoContent/updateVideoContentAnalysis',
+    url: '/tkhelper/video-analysis/update',
     method: 'put',
     data: data
   })
@@ -39,7 +39,7 @@ export const updateVideoContentAnalysis = (data) => {
 // 根据ID查询视频内容分析
 export const findVideoContentAnalysis = (ID) => {
   return service({
-    url: '/videoContent/findVideoContentAnalysis',
+    url: '/tkhelper/video-analysis/find',
     method: 'get',
     params: { ID }
   })
@@ -48,7 +48,7 @@ export const findVideoContentAnalysis = (ID) => {
 // 分页获取视频内容分析列表
 export const getVideoContentAnalysisList = (params) => {
   return service({
-    url: '/videoContent/getVideoContentAnalysisList',
+    url: '/tkhelper/video-analysis/getVideoContentAnalysisList',
     method: 'get',
     params
   })
@@ -57,7 +57,7 @@ export const getVideoContentAnalysisList = (params) => {
 // 获取视频内容分析统计信息
 export const getVideoContentAnalysisStatistics = () => {
   return service({
-    url: '/videoContent/getVideoContentAnalysisStatistics',
+    url: '/tkhelper/video-analysis/getVideoContentAnalysisStatistics',
     method: 'get'
   })
 }
@@ -65,7 +65,7 @@ export const getVideoContentAnalysisStatistics = () => {
 // 从Excel导入视频内容分析数据
 export const importVideoContentAnalysisFromExcel = (data) => {
   return service({
-    url: '/videoContent/importVideoContentAnalysisFromExcel',
+    url: '/tkhelper/video-analysis/importVideoContentAnalysisFromExcel',
     method: 'post',
     data: data
   })
@@ -74,7 +74,7 @@ export const importVideoContentAnalysisFromExcel = (data) => {
 // 批量更新处理状态
 export const batchUpdateProcessStatus = (data) => {
   return service({
-    url: '/videoContent/batchUpdateProcessStatus',
+    url: '/tkhelper/video-analysis/batchUpdateProcessStatus',
     method: 'put',
     data: data
   })
@@ -83,7 +83,7 @@ export const batchUpdateProcessStatus = (data) => {
 // 不鉴权的视频内容分析接口
 export const getVideoContentAnalysisPublic = () => {
   return service({
-    url: '/videoContent/getVideoContentAnalysisPublic',
+    url: '/tkhelper/video-analysis/getVideoContentAnalysisPublic',
     method: 'get'
   })
 }

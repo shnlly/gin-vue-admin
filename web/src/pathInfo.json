@@ -13,7 +13,7 @@
   "/src/view/dashboard/index.vue": "Dashboard",
   "/src/view/error/index.vue": "Error",
   "/src/view/error/reload.vue": "Reload",
-  "/src/view/example/aiChat/index.vue": "AiChat",
+  "/src/view/example/aiChat/index.vue": "Index",
   "/src/view/example/aiModel/aiModel.vue": "AiModel",
   "/src/view/example/breakpoint/breakpoint.vue": "BreakPoint",
   "/src/view/example/customer/customer.vue": "Customer",
@@ -80,5 +80,8 @@
   "/src/view/systemTools/version/version.vue": "SysVersion",
   "/src/plugin/announcement/form/info.vue": "InfoForm",
   "/src/plugin/announcement/view/info.vue": "Info",
-  "/src/plugin/email/view/index.vue": "Email"
+  "/src/plugin/email/view/index.vue": "Email",
+  "/src/plugin/tkhelper/view/aiChat.vue": "AiChat",
+  "/src/plugin/tkhelper/view/aiModel.vue": "AiModel",
+  "/src/plugin/tkhelper/view/videoContentAnalysis.vue": "VideoContentAnalysis"
 }

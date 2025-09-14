@@ -61,7 +61,6 @@ func (e *ensureTables) MigrateTable(ctx context.Context) (context.Context, error
 		example.ExaFileChunk{},
 		example.ExaFileUploadAndDownload{},
 		example.ExaAttachmentCategory{},
-		example.VideoContentAnalysis{},
 
 		model.Info{},
 	}
@@ -103,7 +102,6 @@ func (e *ensureTables) TableCreated(ctx context.Context) bool {
 		example.ExaFileChunk{},
 		example.ExaFileUploadAndDownload{},
 		example.ExaAttachmentCategory{},
-		example.VideoContentAnalysis{},
 
 		model.Info{},
 	}
