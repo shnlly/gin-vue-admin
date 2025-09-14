@@ -160,37 +160,37 @@ func Api(ctx context.Context) {
 
 		// 视频内容分析 API
 		{
-			Path:        "/tkhelper/video-content-analysis/create",
+			Path:        "/tkhelper/video-analysis/create",
 			Description: "新建视频内容分析",
 			ApiGroup:    "视频内容分析",
 			Method:      "POST",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/delete",
+			Path:        "/tkhelper/video-analysis/delete",
 			Description: "删除视频内容分析",
 			ApiGroup:    "视频内容分析",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/deleteByIds",
+			Path:        "/tkhelper/video-analysis/deleteByIds",
 			Description: "批量删除视频内容分析",
 			ApiGroup:    "视频内容分析",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/update",
+			Path:        "/tkhelper/video-analysis/update",
 			Description: "更新视频内容分析",
 			ApiGroup:    "视频内容分析",
 			Method:      "PUT",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/find",
+			Path:        "/tkhelper/video-analysis/find",
 			Description: "根据ID获取视频内容分析",
 			ApiGroup:    "视频内容分析",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/video-content-analysis/getVideoContentAnalysisList",
+			Path:        "/tkhelper/video-analysis/getVideoContentAnalysisList",
 			Description: "获取视频内容分析列表",
 			ApiGroup:    "视频内容分析",
 			Method:      "GET",
