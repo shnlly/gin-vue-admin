@@ -15,6 +15,9 @@ type AiModel struct {
 	IsDefault *bool  `json:"isDefault" form:"isDefault" gorm:"column:is_default;comment:是否为系统默认使用的模型;default:false"`     // 是否默认
 	Sort      int    `json:"sort" form:"sort" gorm:"column:sort;comment:显示排序，数字越小越靠前;default:999"`                       // 排序
 	Remark    string `json:"remark" form:"remark" gorm:"column:remark;comment:模型的备注信息;size:500"`                         // 备注
+	CreatedBy uint   `gorm:"column:created_by;comment:创建者"`
+	UpdatedBy uint   `gorm:"column:updated_by;comment:更新者"`
+	DeletedBy uint   `gorm:"column:deleted_by;comment:删除者"`
 }
 
 // TableName 设置表名，添加tkhelper前缀避免冲突

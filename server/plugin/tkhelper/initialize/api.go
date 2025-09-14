@@ -66,43 +66,43 @@ func Api(ctx context.Context) {
 
 		// AI对话会话管理 API
 		{
-			Path:        "/tkhelper/ai-chat-session/create",
+			Path:        "/tkhelper/chat-session/create",
 			Description: "新建AI对话会话",
 			ApiGroup:    "AI对话管理",
 			Method:      "POST",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/delete",
+			Path:        "/tkhelper/chat-session/delete",
 			Description: "删除AI对话会话",
 			ApiGroup:    "AI对话管理",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/deleteByIds",
+			Path:        "/tkhelper/chat-session/deleteByIds",
 			Description: "批量删除AI对话会话",
 			ApiGroup:    "AI对话管理",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/update",
+			Path:        "/tkhelper/chat-session/update",
 			Description: "更新AI对话会话",
 			ApiGroup:    "AI对话管理",
 			Method:      "PUT",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/find",
+			Path:        "/tkhelper/chat-session/find",
 			Description: "根据ID获取AI对话会话",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/getAiChatSessionList",
+			Path:        "/tkhelper/chat-session/getAiChatSessionList",
 			Description: "获取AI对话会话列表",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-session/getUserSessions",
+			Path:        "/tkhelper/chat-session/getUserSessions",
 			Description: "获取用户会话列表",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
@@ -110,49 +110,49 @@ func Api(ctx context.Context) {
 
 		// AI对话消息管理 API
 		{
-			Path:        "/tkhelper/ai-chat-message/create",
+			Path:        "/tkhelper/chat-message/create",
 			Description: "新建AI对话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "POST",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/delete",
+			Path:        "/tkhelper/chat-message/delete",
 			Description: "删除AI对话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/deleteByIds",
+			Path:        "/tkhelper/chat-message/deleteByIds",
 			Description: "批量删除AI对话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "DELETE",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/update",
+			Path:        "/tkhelper/chat-message/update",
 			Description: "更新AI对话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "PUT",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/find",
+			Path:        "/tkhelper/chat-message/find",
 			Description: "根据ID获取AI对话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/getAiChatMessageList",
+			Path:        "/tkhelper/chat-message/getAiChatMessageList",
 			Description: "获取AI对话消息列表",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/getSessionMessages",
+			Path:        "/tkhelper/chat-message/getSessionMessages",
 			Description: "获取会话消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "GET",
 		},
 		{
-			Path:        "/tkhelper/ai-chat-message/sendMessage",
+			Path:        "/tkhelper/chat-message/sendMessage",
 			Description: "发送聊天消息",
 			ApiGroup:    "AI对话管理",
 			Method:      "POST",

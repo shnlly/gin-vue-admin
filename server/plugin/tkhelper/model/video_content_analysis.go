@@ -30,6 +30,9 @@ type VideoContentAnalysis struct {
 	IsScriptFixed    *bool  `json:"isScriptFixed" form:"isScriptFixed" gorm:"column:is_script_fixed;comment:是否已修复文案;default:false"`          // 是否修复文案
 	IsVideoAnalyzed  *bool  `json:"isVideoAnalyzed" form:"isVideoAnalyzed" gorm:"column:is_video_analyzed;comment:是否已分析视频画面;default:false"`  // 是否分析视频画面
 	FixNote          string `json:"fixNote" form:"fixNote" gorm:"column:fix_note;comment:修复说明备注;size:500"`                                   // 修复说明
+	CreatedBy        uint   `gorm:"column:created_by;comment:创建者"`
+	UpdatedBy        uint   `gorm:"column:updated_by;comment:更新者"`
+	DeletedBy        uint   `gorm:"column:deleted_by;comment:删除者"`
 }
 
 // TableName 设置表名，添加tkhelper前缀避免冲突

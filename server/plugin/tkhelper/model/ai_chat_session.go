@@ -14,6 +14,9 @@ type AiChatSession struct {
 	LastMessage  string `json:"lastMessage" form:"lastMessage" gorm:"column:last_message;comment:会话的最后一条消息内容;size:500"`                // 最后消息
 	Status       string `json:"status" form:"status" gorm:"column:status;comment:会话状态：active-活跃,archived-归档;size:20;default:'active'"` // 会话状态
 	UserId       uint   `json:"userId" form:"userId" gorm:"column:user_id;comment:会话所属用户ID;index"`                                     // 用户ID
+	CreatedBy    uint   `gorm:"column:created_by;comment:创建者"`
+	UpdatedBy    uint   `gorm:"column:updated_by;comment:更新者"`
+	DeletedBy    uint   `gorm:"column:deleted_by;comment:删除者"`
 }
 
 // TableName 设置表名，添加tkhelper前缀避免冲突
