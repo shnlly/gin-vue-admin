@@ -13,7 +13,6 @@ import (
 	"github.com/openai/openai-go/v2"
 	"github.com/openai/openai-go/v2/option"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type AiChatMessageService struct{}
@@ -36,29 +35,15 @@ func (aiChatMessageService *AiChatMessageService) CreateAiChatMessage(aiChatMess
 
 // DeleteAiChatMessage 删除AI对话消息记录
 func (aiChatMessageService *AiChatMessageService) DeleteAiChatMessage(ID string, userID uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiChatMessage{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
-			return err
-		}
-		if err = tx.Delete(&example.AiChatMessage{}, "id = ?", ID).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 软删除AI对话消息记录
+	err = global.GVA_DB.Delete(&example.AiChatMessage{}, "id = ?", ID).Error
 	return err
 }
 
 // DeleteAiChatMessageByIds 批量删除AI对话消息记录
 func (aiChatMessageService *AiChatMessageService) DeleteAiChatMessageByIds(IDs []string, deleted_by uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiChatMessage{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
-			return err
-		}
-		if err := tx.Where("id in ?", IDs).Delete(&example.AiChatMessage{}).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 批量软删除AI对话消息记录
+	err = global.GVA_DB.Where("id in ?", IDs).Delete(&example.AiChatMessage{}).Error
 	return err
 }
 

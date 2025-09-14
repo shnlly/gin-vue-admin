@@ -20,9 +20,7 @@ func (aiChatSessionService *AiChatSessionService) CreateAiChatSession(aiChatSess
 // DeleteAiChatSession 删除AI对话会话记录
 func (aiChatSessionService *AiChatSessionService) DeleteAiChatSession(ID string, userID uint) (err error) {
 	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiChatSession{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
-			return err
-		}
+		// 删除会话记录（软删除）
 		if err = tx.Delete(&example.AiChatSession{}, "id = ?", ID).Error; err != nil {
 			return err
 		}
@@ -38,9 +36,7 @@ func (aiChatSessionService *AiChatSessionService) DeleteAiChatSession(ID string,
 // DeleteAiChatSessionByIds 批量删除AI对话会话记录
 func (aiChatSessionService *AiChatSessionService) DeleteAiChatSessionByIds(IDs []string, deleted_by uint) (err error) {
 	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiChatSession{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
-			return err
-		}
+		// 批量删除会话记录（软删除）
 		if err := tx.Where("id in ?", IDs).Delete(&example.AiChatSession{}).Error; err != nil {
 			return err
 		}

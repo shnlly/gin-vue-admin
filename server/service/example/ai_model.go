@@ -21,29 +21,15 @@ func (aiModelService *AiModelService) CreateAiModel(aiModel *example.AiModel) (e
 
 // DeleteAiModel 删除AI模型记录
 func (aiModelService *AiModelService) DeleteAiModel(ID string, userID uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiModel{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
-			return err
-		}
-		if err = tx.Delete(&example.AiModel{}, "id = ?", ID).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 软删除AI模型记录
+	err = global.GVA_DB.Delete(&example.AiModel{}, "id = ?", ID).Error
 	return err
 }
 
 // DeleteAiModelByIds 批量删除AI模型记录
 func (aiModelService *AiModelService) DeleteAiModelByIds(IDs []string, deleted_by uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.AiModel{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
-			return err
-		}
-		if err := tx.Where("id in ?", IDs).Delete(&example.AiModel{}).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 批量软删除AI模型记录
+	err = global.GVA_DB.Where("id in ?", IDs).Delete(&example.AiModel{}).Error
 	return err
 }
 

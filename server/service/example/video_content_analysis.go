@@ -8,7 +8,6 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/model/example"
 	exampleReq "github.com/flipped-aurora/gin-vue-admin/server/model/example/request"
 	exampleRes "github.com/flipped-aurora/gin-vue-admin/server/model/example/response"
-	"gorm.io/gorm"
 )
 
 type VideoContentAnalysisService struct{}
@@ -23,29 +22,15 @@ func (vca *VideoContentAnalysisService) CreateVideoContentAnalysis(videoContent 
 
 // DeleteVideoContentAnalysis 删除视频内容分析记录
 func (vca *VideoContentAnalysisService) DeleteVideoContentAnalysis(ID string, userID uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.VideoContentAnalysis{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
-			return err
-		}
-		if err = tx.Delete(&example.VideoContentAnalysis{}, "id = ?", ID).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 软删除视频内容分析记录
+	err = global.GVA_DB.Delete(&example.VideoContentAnalysis{}, "id = ?", ID).Error
 	return err
 }
 
 // DeleteVideoContentAnalysisByIds 批量删除视频内容分析记录
 func (vca *VideoContentAnalysisService) DeleteVideoContentAnalysisByIds(IDs []string, deleted_by uint) (err error) {
-	err = global.GVA_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&example.VideoContentAnalysis{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
-			return err
-		}
-		if err := tx.Where("id in ?", IDs).Delete(&example.VideoContentAnalysis{}).Error; err != nil {
-			return err
-		}
-		return nil
-	})
+	// 批量软删除视频内容分析记录
+	err = global.GVA_DB.Where("id in ?", IDs).Delete(&example.VideoContentAnalysis{}).Error
 	return err
 }
 
