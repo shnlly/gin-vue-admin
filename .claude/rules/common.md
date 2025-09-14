@@ -16,4 +16,7 @@ conda activate gva && python scripts/read_excel.py
 ```
 
 ## 其他通用规则
-（待补充）
+初始化 docker 中 mysql
+```mysql
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'Aa@6447985';
+```
